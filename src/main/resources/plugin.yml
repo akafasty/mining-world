@@ -1,0 +1,4 @@
+name: mining
+version: 1.0.0
+main: net.hodyus.mining.MiningPlugin
+load: STARTUP
