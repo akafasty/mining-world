@@ -30,6 +30,13 @@ public class MineCommand extends CustomCommand {
 
         Player player = (Player) sender;
 
+        if (player.getWorld().getName().equals("mining")) {
+
+            player.sendMessage("§cVocê já está no mundo de mineração!");
+            return;
+
+        }
+
         World world = Bukkit.getWorld(MiningConstants.MINING_WORLD);
         int x = STATIC_RANDOM.nextInt(600),
                 z = STATIC_RANDOM.nextInt(600),
