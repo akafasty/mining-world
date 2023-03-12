@@ -11,7 +11,7 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.entity.Player;
 
-import static net.hodyus.mining.MiningConstants.STATIC_RANDOM;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MineCommand extends CustomCommand {
 
@@ -38,8 +38,8 @@ public class MineCommand extends CustomCommand {
         }
 
         World world = Bukkit.getWorld(MiningConstants.MINING_WORLD);
-        int x = STATIC_RANDOM.nextInt(600),
-                z = STATIC_RANDOM.nextInt(600),
+        int x = ThreadLocalRandom.current().nextInt(600),
+                z = ThreadLocalRandom.current().nextInt(600),
                 y = world.getHighestBlockYAt(x, z);
 
         player.teleport(new Location(world, x, y, z));

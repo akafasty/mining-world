@@ -1,16 +1,12 @@
 package net.hodyus.mining.world;
 
 import lombok.experimental.UtilityClass;
-import net.hodyus.mining.MiningConstants;
-import net.hodyus.mining.MiningPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 
-import java.io.*;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
+
 import static net.hodyus.mining.MiningConstants.MINING_WORLD;
 
 @UtilityClass
@@ -31,50 +27,6 @@ public class MiningWorld {
 
         miningWorld.setGameRuleValue("randomTickSpeed", "1");
 
-    }
-
-    private void copyFileStructure(File source, File target) {
-
-        try {
-
-            List<String> ignore = Arrays.asList("uid.dat", "session.lock");
-
-            if(!ignore.contains(source.getName())) {
-
-                if(source.isDirectory()) {
-
-                    if(!target.exists())
-                        if (!target.mkdirs()) throw new IOException("Couldn't create world directory!");
-
-
-                    String[] files = source.list();
-
-                    for (String file : files) {
-
-                        File srcFile = new File(source, file);
-                        File destFile = new File(target, file);
-
-                        copyFileStructure(srcFile, destFile);
-                    }
-
-                }
-
-                else {
-
-                    InputStream in = new FileInputStream(source);
-                    OutputStream out = new FileOutputStream(target);
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = in.read(buffer)) > 0)
-                        out.write(buffer, 0, length);
-                    in.close();
-                    out.close();
-
-                }
-            }
-        }
-
-        catch (IOException exception) { throw new RuntimeException(exception); }
     }
 
 }

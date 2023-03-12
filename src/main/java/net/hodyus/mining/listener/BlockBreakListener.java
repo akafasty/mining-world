@@ -13,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 @RequiredArgsConstructor
 public class BlockBreakListener implements Listener {
 
@@ -28,10 +30,11 @@ public class BlockBreakListener implements Listener {
         event.getBlock().setType(Material.AIR);
 
         Player player = event.getPlayer();
+        double random = ThreadLocalRandom.current().nextDouble() * 100;
 
         for (Ore ore : registry.getOres()) {
 
-            if ((MiningConstants.STATIC_RANDOM.nextDouble() * 100) > ore.getChance()) continue;
+            if (random > ore.getChance()) continue;
 
             if (ore.getMinY() < event.getBlock().getLocation().getY()) continue;
 
@@ -39,7 +42,7 @@ public class BlockBreakListener implements Listener {
                     oreDrop = ore.getItemStack().clone();
 
             if (ore.isDoesFortuneApply())
-                oreDrop.setAmount(MiningConstants.STATIC_RANDOM.nextInt(itemInHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) + 1) + 1);
+                oreDrop.setAmount(ThreadLocalRandom.current().nextInt(itemInHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) + 1) + 1);
 
             player.giveExp(oreDrop.getAmount());
 
